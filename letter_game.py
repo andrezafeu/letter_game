@@ -12,10 +12,9 @@ words = [
 	'blueberry',
 	'blackberry'
 	]
-
-secret_word = random.choice(words)
 	
 while True:
+	secret_word = random.choice(words)
 	start = input("\nPress enter/return to start a new game or enter Q to quit").lower()
 	if start == 'q':
 		break
@@ -34,7 +33,16 @@ while True:
 
 		guess = input("Pick a letter: ").lower()
 
-		if guess in secret_word:
+		if len(guess) != 1:
+			print("You can only guess a single letter")
+			continue
+		elif guess in wrong_guesses or guess in right_guesses:
+			print("You've already guessed that letter")
+			continue
+		elif not guess.isalpha():
+			print("You can only guess letters")
+			continue
+		elif guess in secret_word:
 			right_guesses.append(guess)
 			if len(right_guesses) == len(secret_word):
 				print("Congratulations! The secret word is {}.".format(secret_word))
