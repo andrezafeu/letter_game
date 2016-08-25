@@ -12,7 +12,7 @@ words = [
 	'blueberry',
 	'blackberry'
 	]
-	
+
 while True:
 	secret_word = random.choice(words)
 	start = input("\nPress enter/return to start a new game or enter Q to quit").lower()
@@ -22,7 +22,7 @@ while True:
 	wrong_guesses = []
 	right_guesses = []
 
-	while len(wrong_guesses) < 7 and len(right_guesses) < len(secret_word):
+	while len(wrong_guesses) < 7:
 		for letter in secret_word:
 			if letter in right_guesses:
 				# end= '' allows to print multiple letters on same line
@@ -42,9 +42,14 @@ while True:
 		elif not guess.isalpha():
 			print("You can only guess letters")
 			continue
-		elif guess in secret_word:
+		
+		if guess in secret_word:
 			right_guesses.append(guess)
-			if len(right_guesses) == len(secret_word):
+			found = True
+			for letter in secret_word:
+				if letter not in right_guesses:
+					found = False
+			if found:
 				print("Congratulations! The secret word is {}.".format(secret_word))
 				break
 		else:
