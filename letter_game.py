@@ -1,3 +1,5 @@
+# this library lets us use functionalities of the operational system
+import os
 import random
 
 words = [
@@ -13,25 +15,42 @@ words = [
 	'blackberry'
 	]
 
+def clear():
+	# all the modern windows
+	if os.name == 'nt':
+		os.system('cls')
+	# for mac and linux
+	else:
+		os.system('clear')
+
+def draw(right_guesses, wrong_guesses, secret_word):
+	for letter in wrong_guesses:
+		print(letter, end=' ')
+	print('\n\n')
+	for letter in secret_word:
+		if letter in right_guesses:
+			# end= '' allows to print multiple letters on same line
+			print(letter, end='')
+		else:
+			print("_", end=' ')
+	print('\nStrikes: {} out of 7\n'.format(len(wrong_guesses)))
+
 while True:
 	secret_word = random.choice(words)
 	start = input("\nPress enter/return to start a new game or enter Q to quit").lower()
 	if start == 'q':
 		break
 	print("\nCan you guess what is the secret word? You have 7 guesses.")
+	
 	wrong_guesses = []
 	right_guesses = []
-
+	
 	while len(wrong_guesses) < 7:
-		for letter in secret_word:
-			if letter in right_guesses:
-				# end= '' allows to print multiple letters on same line
-				print(letter, end='')
-			else:
-				print("_ ", end='')
-		print('\nStrikes: {} out of 7\n'.format(len(wrong_guesses)))
-
+		
+		draw(right_guesses, wrong_guesses, secret_word)
+		
 		guess = input("Pick a letter: ").lower()
+		clear()
 
 		if len(guess) != 1:
 			print("You can only guess a single letter")
@@ -54,6 +73,5 @@ while True:
 				break
 		else:
 			wrong_guesses.append(guess)
-			print("This word doesn't have the letter {}.".format(guess))
 	else:
 		print("You ran out of guesses. The secret word was {}.".format(secret_word))
