@@ -2,18 +2,9 @@
 import os
 import random
 
-words = [
-	'apple',
-	'melon',
-	'banana',
-	'orange',
-	'lime',
-	'lemon',
-	'coconut',
-	'strawberry',
-	'blueberry',
-	'blackberry'
-	]
+# 'r' stands for read
+file = open('words.txt', 'r')
+words = file.read().splitlines()
 
 def clear():
 	# all the modern windows
